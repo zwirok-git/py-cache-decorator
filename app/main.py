@@ -8,13 +8,14 @@ def cache(func: Callable) -> Callable:
     @wraps(func)
     def wrapper(*args, **kwargs) -> Any:
         key = (args, tuple(sorted(kwargs.items())))
-        if key in cache_dict.keys():
+
+        if key in cache_dict:
             print("Getting from cache")
-            return cache_dict[args]
+            return cache_dict[key]
 
         else:
-            cache_dict.update({(args, kwargs.values()): func(*args, **kwargs)})
+            cache_dict[key] = func(*args, **kwargs)
             print("Calculating new result")
-            return cache_dict[args]
+            return cache_dict[key]
 
     return wrapper
