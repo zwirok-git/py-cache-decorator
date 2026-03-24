@@ -13,7 +13,7 @@ def cache(func: Callable) -> Callable:
             return cache_dict[args]
 
         else:
-            cache_dict.update({(args, kwargs): func(*args, **kwargs)})
+            cache_dict.update({(args, kwargs.values()): func(*args, **kwargs)})
             print("Calculating new result")
             return cache_dict[args]
 
